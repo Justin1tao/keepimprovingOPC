@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>iOS App 三件套 · 谢宇航</title>
+  <link rel="stylesheet" href="site.css" />
+  <style>
+    .ios-preview-frame {
+      padding: 0;
+      overflow: hidden;
+      border-style: solid;
+      background: var(--surface);
+    }
+
+    .ios-preview-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 320px;
+      object-fit: cover;
+    }
+
+    .ios-preview-demo .screen-grid {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor-light" aria-hidden="true"></div>
+  <header class="topnav">
+    <div class="container topnav-inner">
+      <a class="logo" href="index.html">谢宇航</a>
+      <nav aria-label="项目导航">
+        <a href="#apps">应用</a>
+        <a href="#system">产品系统</a>
+        <a href="#slots">材料</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section detail-hero" data-od-id="hero">
+      <div class="container detail-shell">
+        <div class="reveal">
+          <p class="eyebrow">SwiftUI · Productization</p>
+          <h1>iOS App 三件套：把个人需求打磨成可上架产品。</h1>
+          <p class="lead">研究生阶段计划申请苹果开发者账号并持续打磨 3 款自研 App：OnlyEar、healthy90_clock、RunningWeight。方向覆盖音频工具、睡眠健康与 AI 体脂管理。</p>
+          <div class="hero-cta">
+            <button class="btn btn-primary" data-jump="#apps">查看三款 App</button>
+            <a class="btn btn-secondary" href="index.html#projects">返回项目矩阵</a>
+          </div>
+        </div>
+        <div class="demo-screen ios-preview-demo reveal" data-tilt>
+          <div class="screen-grid"></div>
+          <div class="screen-placeholder ios-preview-frame">
+            <img src="ios-preview-01.jpeg.JPEG" alt="OnlyEar、RunningWeight、healthy90_clock 三款 iOS App 图标截图">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="apps" data-od-id="apps">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">App Portfolio</p>
+            <h2>三个方向分别证明本地体验、健康系统和 AI 产品化。</h2>
+          </div>
+        </div>
+        <div class="grid-3">
+          <article class="card detail-card reveal">
+            <p class="meta">OnlyEar</p>
+            <h3>极简音频博客</h3>
+            <p>定位为本地化音频转换与管理工具：视频/在线链接转音频、后台播放、本地音乐库、私密笔记与心情日记。</p>
+            <div class="tag-row"><span class="tag">Local-first</span><span class="tag">Audio</span><span class="tag">Privacy</span></div>
+          </article>
+          <article class="card detail-card reveal">
+            <p class="meta">healthy90_clock</p>
+            <h3>R90 睡眠闹钟</h3>
+            <p>基于 90 分钟睡眠周期的健康管理系统：智能闹钟、咖啡因追踪、Coffee Nap、白噪音助眠与睡眠分析。</p>
+            <div class="tag-row"><span class="tag">Health</span><span class="tag">Sleep Cycle</span><span class="tag">Routine</span></div>
+          </article>
+          <article class="card detail-card reveal">
+            <p class="meta">RunningWeight</p>
+            <h3>AI 体脂管理</h3>
+            <p>Agent 架构的身材管理系统：OpenAI Vision 食物热量识别、个性化推荐、营养数据库和 8 款成就徽章。</p>
+            <div class="tag-row"><span class="tag">AI Vision</span><span class="tag">Qwen</span><span class="tag">Gamification</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="system" data-od-id="system">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Product System</p>
+            <h2>这组项目可以展示“从需求到产品”的完整链路。</h2>
+          </div>
+        </div>
+        <div class="flow">
+          <article class="flow-step reveal"><span class="num">01</span><div><h3>个人真实需求</h3><p>音频、睡眠、身材管理都来自高频个人场景，适合作为独立开发者产品入口。</p></div></article>
+          <article class="flow-step reveal"><span class="num">02</span><div><h3>SwiftUI 快速原型</h3><p>用系统组件和本地存储先打通核心流程，再逐步加入 AI 能力。</p></div></article>
+          <article class="flow-step reveal"><span class="num">03</span><div><h3>AI Agent 增强</h3><p>RunningWeight 通过视觉识别与 Harness 工程，把手动记录变成半自动化建议系统。</p></div></article>
+          <article class="flow-step reveal"><span class="num">04</span><div><h3>上架与迭代</h3><p>申请开发者账号后，以 App Store 链接、用户反馈、留存数据和版本路线图持续验证产品方向。</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="slots" data-od-id="slots">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Project Materials</p>
+            <h2>产品截图按使用场景组织。</h2>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="screen-placeholder reveal">
+            <video src="videos/10009.MOV" autoplay muted loop playsinline></video>
+            <span>OnlyEar · 你的专属本地博客、关于声音日记</span>
+          </div>
+          <div class="screen-placeholder reveal">
+            <video src="videos/录屏2026-06-18 17.06.04.MOV" autoplay muted loop playsinline></video>
+            <span>RunningWeight · AI 食物识别与体脂管理，徽章激励系统</span>
+          </div>
+          <div class="screen-placeholder reveal">
+            <video src="videos/录屏2026-06-18 17.01.03.MOV" autoplay muted loop playsinline></video>
+            <span>R90 睡眠闹钟 · 基于 R90 周期的智能唤醒与咖啡因追踪</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pagefoot">
+    <div class="container topnav-inner">
+      <span>iOS App 三件套 · Project Detail</span>
+      <a class="meta" href="index.html">返回个人首页</a>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="site.js"></script>
+</body>
+</html>

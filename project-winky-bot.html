@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Winky-bot 项目详情 · 谢宇航</title>
+  <link rel="stylesheet" href="site.css" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --surface-warm: var(--surface);
+      --fg: #181d26;
+      --fg-2: #333333;
+      --muted: rgba(4, 14, 32, 0.69);
+      --meta: var(--muted);
+      --border: #e0e2e6;
+      --border-soft: #eef0f3;
+      --accent: #1b61c9;
+      --accent-on: #ffffff;
+      --accent-hover: #254fad;
+      --accent-active: color-mix(in oklab, var(--accent), black 14%);
+      --success: #006400;
+      --warn: #eab308;
+      --danger: #dc2626;
+      --font-display: "Haas Groot Disp", Haas, -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+      --font-body: Haas, -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+      --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
+      --text-xs: 12px;
+      --text-sm: 14px;
+      --text-base: 16px;
+      --text-lg: 20px;
+      --text-xl: 24px;
+      --text-2xl: 32px;
+      --text-3xl: 40px;
+      --text-4xl: 48px;
+      --leading-body: 1.35;
+      --leading-tight: 1.2;
+      --tracking-display: 0;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-12: 48px;
+      --section-y-desktop: 96px;
+      --section-y-tablet: 64px;
+      --section-y-phone: 48px;
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-pill: 9999px;
+      --elev-flat: none;
+      --elev-ring: 0 0 0 1px var(--border);
+      --elev-raised:
+        0 0 1px rgba(0, 0, 0, 0.32),
+        0 0 2px rgba(0, 0, 0, 0.08),
+        0 1px 3px rgba(45, 127, 249, 0.28),
+        inset 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+      --focus-ring: 0 0 0 3px color-mix(in oklab, var(--accent), transparent 70%);
+      --motion-fast: 150ms;
+      --motion-base: 200ms;
+      --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+      --container-max: 1200px;
+      --container-gutter-desktop: 24px;
+      --container-gutter-tablet: 16px;
+      --container-gutter-phone: 12px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: var(--text-base); line-height: var(--leading-body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+    p { text-wrap: pretty; }
+    h1, h2, h3 { margin: 0; font-family: var(--font-display); line-height: var(--leading-tight); text-wrap: balance; }
+    h1 { font-size: clamp(42px, 6vw, 76px); font-weight: 840; max-width: 980px; }
+    h2 { font-size: clamp(30px, 4vw, var(--text-4xl)); font-weight: 780; }
+    h3 { font-size: var(--text-xl); font-weight: 740; }
+    .container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-gutter-desktop); }
+    .section { padding: var(--section-y-desktop) 0; }
+    .section + .section { border-top: 1px solid var(--border); }
+    .topnav { position: sticky; top: 0; z-index: 20; background: color-mix(in oklab, var(--bg), transparent 8%); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px); }
+    .topnav-inner { min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); }
+    .logo { font-family: var(--font-display); font-weight: 760; }
+    .topnav nav { display: flex; gap: var(--space-6); color: var(--muted); font-size: var(--text-sm); }
+    .topnav a:hover { color: var(--fg); }
+    .eyebrow { margin: 0 0 var(--space-5); color: var(--accent); font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.12em; text-transform: uppercase; }
+    .lead { max-width: 68ch; margin: var(--space-6) 0 0; color: var(--fg-2); font-size: clamp(18px, 2vw, 22px); line-height: 1.45; }
+    .meta, .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+    .muted { color: var(--muted); }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(360px, 0.96fr); gap: var(--space-12); align-items: center; }
+    .btn { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: var(--space-2); padding: 12px 20px; border-radius: var(--radius-sm); border: 1px solid transparent; font-weight: 600; transition: transform var(--motion-fast) var(--ease-standard), background var(--motion-fast) var(--ease-standard), border-color var(--motion-fast) var(--ease-standard); }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: var(--accent-on); box-shadow: var(--elev-raised); }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { background: var(--surface); color: var(--fg); border-color: var(--border); }
+    .btn-secondary:hover { border-color: var(--accent); }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-8); }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-8); transition: transform var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard); }
+    .card:hover { transform: translateY(-3px); border-color: color-mix(in oklab, var(--accent), var(--border) 72%); box-shadow: var(--elev-raised); }
+    .demo-screen { border: 1px solid var(--border); border-radius: var(--radius-lg); min-height: 540px; background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), color-mix(in oklab, var(--accent), transparent 85%), transparent 32%), var(--surface); box-shadow: var(--elev-raised); padding: var(--space-6); position: relative; overflow: hidden; }
+    .screen-grid { position: absolute; inset: 0; background-image: linear-gradient(to right, color-mix(in oklab, var(--border), transparent 40%) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in oklab, var(--border), transparent 40%) 1px, transparent 1px); background-size: 40px 40px; }
+    .desktop-window { position: relative; z-index: 1; height: 100%; min-height: 488px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); display: grid; grid-template-rows: 46px 1fr; overflow: hidden; }
+    .window-bar { border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: var(--space-2); padding: 0 var(--space-4); color: var(--muted); font-size: var(--text-sm); }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); }
+    .window-body { display: grid; grid-template-columns: 180px 1fr; min-height: 0; }
+    .side { border-right: 1px solid var(--border); padding: var(--space-4); display: grid; gap: var(--space-3); align-content: start; }
+    .side-item { height: 36px; border: 1px solid var(--border); border-radius: var(--radius-sm); display: flex; align-items: center; padding: 0 var(--space-3); color: var(--muted); font-size: var(--text-sm); }
+    .target-area { position: relative; padding: var(--space-6); }
+    .target-card { width: min(100%, 420px); border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--elev-raised); }
+    .cursor-line { position: absolute; left: 36%; top: 52%; width: 36%; height: 2px; background: var(--accent); transform-origin: left; animation: point 2.4s var(--ease-standard) infinite; }
+    .cursor-line::after { content: ""; position: absolute; right: -6px; top: -5px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+    @keyframes point { 0%, 100% { transform: scaleX(0.28); opacity: 0.5; } 50% { transform: scaleX(1); opacity: 1; } }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
+    .section-head { display: flex; justify-content: space-between; gap: var(--space-8); align-items: end; margin-bottom: var(--space-12); }
+    .section-head p { margin: 0; max-width: 54ch; color: var(--muted); }
+    .flow { display: grid; gap: var(--space-3); }
+    .flow-step { display: grid; grid-template-columns: 72px 1fr; gap: var(--space-4); padding: var(--space-5); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); }
+    .flow-step .num { color: var(--accent); font-size: var(--text-xl); font-weight: 700; }
+    .flow-step p { margin: var(--space-2) 0 0; color: var(--muted); }
+    .tabs { border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .tabbar { display: flex; flex-wrap: wrap; gap: var(--space-2); padding: var(--space-3); border-bottom: 1px solid var(--border); background: color-mix(in oklab, var(--accent), transparent 96%); }
+    .tabbar button { border: 1px solid var(--border); background: var(--surface); color: var(--muted); border-radius: var(--radius-sm); padding: 10px 14px; }
+    .tabbar button[aria-selected="true"] { color: var(--accent-on); background: var(--accent); border-color: var(--accent); }
+    .panel { display: none; padding: var(--space-8); }
+    .panel.active { display: block; }
+    .panel p { color: var(--muted); }
+    .tag-row { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-5); }
+    .tag { display: inline-flex; align-items: center; min-height: 30px; padding: 5px 10px; border: 1px solid var(--border); border-radius: var(--radius-pill); color: var(--muted); font-size: var(--text-sm); background: var(--surface); }
+    .metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+    .metric { border-top: 1px solid var(--border); padding-top: var(--space-5); }
+    .metric strong { display: block; font-family: var(--font-display); font-size: clamp(36px, 5vw, 58px); line-height: 1; }
+    .metric span { color: var(--muted); font-size: var(--text-sm); }
+    .target-area { min-height: 442px; isolation: isolate; }
+    .target-card { position: relative; z-index: 2; }
+    .guide-path { position: absolute; inset: 32px 24px 36px; z-index: 1; width: calc(100% - 48px); height: calc(100% - 68px); overflow: visible; pointer-events: none; }
+    .guide-path path { fill: none; vector-effect: non-scaling-stroke; }
+    .guide-rail { stroke: color-mix(in oklab, var(--accent), transparent 84%); stroke-width: 2; stroke-dasharray: 6 10; }
+    .guide-flow { stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 74 520; stroke-dashoffset: 240; filter: drop-shadow(0 0 8px color-mix(in oklab, var(--accent), transparent 68%)); }
+    .guide-hotspot { position: absolute; right: 21%; top: 44%; z-index: 3; display: grid; place-items: center; pointer-events: none; }
+    .hotspot-ring { width: 54px; height: 54px; border-radius: 50%; border: 2px solid var(--accent); box-shadow: 0 0 0 10px color-mix(in oklab, var(--accent), transparent 90%), 0 0 28px color-mix(in oklab, var(--accent), transparent 76%); background: color-mix(in oklab, var(--surface), transparent 8%); }
+    .hotspot-label { position: absolute; top: 62px; min-width: 92px; text-align: center; color: var(--accent); font-size: var(--text-xs); font-family: var(--font-mono); letter-spacing: 0.08em; }
+    .smart-cursor { position: absolute; left: 18%; top: 16%; z-index: 4; display: inline-flex; align-items: center; gap: var(--space-2); color: var(--accent); font-size: var(--text-xs); font-family: var(--font-mono); letter-spacing: 0.08em; pointer-events: none; filter: drop-shadow(0 8px 12px color-mix(in oklab, var(--accent), transparent 72%)); will-change: transform; }
+    .cursor-tip { width: 0; height: 0; border-left: 14px solid var(--accent); border-top: 9px solid transparent; border-bottom: 9px solid transparent; transform: rotate(42deg); }
+    .cursor-label { padding: 4px 8px; border: 1px solid color-mix(in oklab, var(--accent), transparent 68%); border-radius: var(--radius-pill); background: color-mix(in oklab, var(--surface), transparent 6%); }
+    .winky-companion { transform-origin: 50% 90%; }
+    .winky-antenna { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); height: 28px; width: 2px; border-radius: var(--radius-pill); background: var(--accent); box-shadow: 0 0 16px color-mix(in oklab, var(--accent), transparent 62%); }
+    .winky-antenna::before { content: ""; position: absolute; left: 50%; bottom: -2px; width: 18px; height: 8px; border: 1px solid color-mix(in oklab, var(--accent), transparent 42%); border-top: 0; border-radius: 0 0 14px 14px; transform: translateX(-50%); }
+    .winky-antenna::after { top: -9px; }
+    .winky-speech { position: absolute; right: 118px; bottom: 118px; width: 196px; padding: 10px 12px; border: 1px solid color-mix(in oklab, var(--accent), var(--border) 50%); border-radius: var(--radius-md); background: color-mix(in oklab, var(--surface), transparent 3%); color: var(--fg); font-size: var(--text-sm); box-shadow: var(--elev-raised); opacity: 0; transform: translateY(8px) scale(0.96); transform-origin: 100% 100%; pointer-events: none; }
+    .winky-speech::after { content: ""; position: absolute; right: -7px; bottom: 20px; width: 12px; height: 12px; border-top: 1px solid color-mix(in oklab, var(--accent), var(--border) 50%); border-right: 1px solid color-mix(in oklab, var(--accent), var(--border) 50%); background: var(--surface); transform: rotate(45deg); }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 560ms var(--ease-standard), transform 560ms var(--ease-standard); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .pagefoot { padding: var(--space-8) 0; border-top: 1px solid var(--border); color: var(--muted); font-size: var(--text-sm); }
+    @media (max-width: 920px) {
+      .container { padding-inline: var(--container-gutter-tablet); }
+      .section { padding: var(--section-y-tablet) 0; }
+      .hero-grid, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+      .section-head p { margin-top: var(--space-4); }
+      .metric-row { grid-template-columns: 1fr; }
+      .topnav nav { display: none; }
+      .window-body { grid-template-columns: 1fr; }
+      .side { display: none; }
+    }
+    @media (max-width: 520px) {
+      .container { padding-inline: var(--container-gutter-phone); }
+      .section { padding: var(--section-y-phone) 0; }
+      .demo-screen { min-height: 440px; padding: var(--space-3); }
+      .desktop-window { min-height: 400px; }
+      .guide-path, .smart-cursor, .guide-hotspot { display: none; }
+      .winky-speech { right: 16px; bottom: 128px; width: 180px; }
+      .flow-step { grid-template-columns: 1fr; }
+      .panel { padding: var(--space-5); }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor-light" aria-hidden="true"></div>
+  <header class="topnav">
+    <div class="container topnav-inner">
+      <a class="logo" href="index.html">谢宇航</a>
+      <nav aria-label="项目导航">
+        <a href="#problem">问题</a>
+        <a href="#flow">项目流程</a>
+        <a href="#architecture">架构</a>
+        <a href="#roadmap">路线</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" data-od-id="hero">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <p class="eyebrow">Winky · Multi-Agent Cursor Companion</p>
+          <h1>面向未来人机协同的智能光标跟随桌面机器人。</h1>
+          <p class="lead">Winky 是一款多 Agent 智能光标跟随桌面机器人。它关注的不是“替用户点完所有按钮”，而是让 AI 理解用户目标、看懂当前屏幕，并通过光标高亮、语音、表情与眨眼等具身反馈，引导用户完成复杂软件里的下一步操作。</p>
+          <div class="hero-cta">
+            <button class="btn btn-primary" data-jump="#flow">查看项目流程</button>
+            <a class="btn btn-secondary" href="index.html">返回首页</a>
+          </div>
+        </div>
+        <div class="demo-screen reveal">
+          <div class="screen-grid"></div>
+          <div class="desktop-window">
+            <div class="window-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="meta">System Settings · Screen Recording</span></div>
+            <div class="window-body">
+              <aside class="side">
+                <div class="side-item">Privacy</div>
+                <div class="side-item">Accessibility</div>
+                <div class="side-item">Screen Recording</div>
+                <div class="side-item">Automation</div>
+              </aside>
+              <div class="target-area">
+                <svg class="guide-path" viewBox="0 0 420 300" aria-hidden="true">
+                  <path class="guide-rail" d="M70 68 C150 28 220 86 268 144 S328 232 382 194" />
+                  <path class="guide-flow" d="M70 68 C150 28 220 86 268 144 S328 232 382 194" />
+                </svg>
+                <div class="guide-hotspot" aria-hidden="true">
+                  <span class="hotspot-ring"></span>
+                  <span class="hotspot-label">下一步位置</span>
+                </div>
+                <div class="smart-cursor" aria-hidden="true">
+                  <span class="cursor-tip"></span>
+                  <span class="cursor-label">AI Cursor</span>
+                </div>
+                <div class="winky-companion" data-winky aria-label="Winky 桌面机器人演示">
+                  <div class="winky-antenna"></div>
+                  <div class="winky-head">
+                    <span class="winky-eye"><i></i></span>
+                    <span class="winky-eye"><i></i></span>
+                    <span class="winky-mouth"></span>
+                  </div>
+                  <div class="winky-body">
+                    <span class="winky-arm left"></span>
+                    <span class="winky-core"></span>
+                    <span class="winky-arm right"></span>
+                  </div>
+                  <div class="pixel-clap" aria-hidden="true"></div>
+                  <div class="winky-speech" aria-hidden="true">已定位目标，跟随光标完成下一步</div>
+                </div>
+                <div class="target-card">
+                  <p class="meta">assistant.intent</p>
+            <h3>“帮我找到文件重命名的位置”</h3>
+            <p class="muted">任务 Agent 分析意图，视觉 Agent 定位目标 UI，光标高亮下一步位置，桌面机器人同步看向目标区域并给出语音提示。</p>
+                </div>
+                <div class="cursor-line" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="problem" data-od-id="problem">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Problem Framing</p>
+            <h2>软件越来越复杂，真正的门槛是找不到正确入口。</h2>
+          </div>
+          <p>数字时代的很多用户并不是不会使用电脑，而是看不懂路径、找不到入口、无法判断下一步该点哪里。Winky 把这种操作断点转化为可视化、可听见、可追踪的协同引导。</p>
+        </div>
+        <div class="grid-3">
+          <article class="card reveal"><h3>任务理解</h3><p class="muted">用户只需要说出目标，例如“帮我找到文件重命名的位置”，系统先把自然语言目标拆解成可执行的操作意图。</p></article>
+          <article class="card reveal"><h3>视觉定位</h3><p class="muted">视觉 Agent 理解当前屏幕，识别按钮、菜单、输入框等 UI 元素，把抽象意图映射到具体目标区域。</p></article>
+          <article class="card reveal"><h3>具身引导</h3><p class="muted">光标高亮、机器人语音、表情、眨眼和视线方向共同给出反馈，让用户知道下一步在哪里、为什么这么做。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="flow" data-od-id="flow">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Project Flow</p>
+            <h2>从用户目标，到 Agent 协同，再到可感知的桌面引导。</h2>
+          </div>
+        </div>
+        <div class="flow">
+          <article class="flow-step reveal"><span class="num">01</span><div><h3>用户提出目标</h3><p>用户不需要描述界面结构，只需要说出想完成的任务，例如找入口、改设置、完成某个办公软件操作。</p></div></article>
+          <article class="flow-step reveal"><span class="num">02</span><div><h3>意图 Agent 分析需求</h3><p>系统判断用户真正要完成的操作，并把目标整理成可追踪的引导链路，而不是直接给一段笼统教程。</p></div></article>
+          <article class="flow-step reveal"><span class="num">03</span><div><h3>视觉 Agent 定位目标</h3><p>多模态视觉模型理解当前屏幕，识别目标 UI 元素的位置，将操作意图落到具体坐标和界面区域。</p></div></article>
+          <article class="flow-step reveal"><span class="num">04</span><div><h3>光标与机器人共同引导</h3><p>辅助光标高亮目标，桌面机器人通过语音、表情、眨眼和视线方向给出具身反馈，引导用户完成下一步。</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="architecture" data-od-id="architecture">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Architecture</p>
+            <h2>多 Agent 协同，把复杂界面变成可跟随的操作路径。</h2>
+          </div>
+          <p>Winky 的核心价值在于把传统“人理解界面、寻找操作”转变为“AI 理解任务、引导人完成操作”。适用于办公软件辅助、教育学习指导、老年人与新手数字化帮助等场景。</p>
+        </div>
+        <div class="tabs reveal">
+          <div class="tabbar" role="tablist" aria-label="架构层">
+            <button role="tab" aria-selected="true" data-tab="vision">视觉 Agent</button>
+            <button role="tab" aria-selected="false" data-tab="mac">桌面感知</button>
+            <button role="tab" aria-selected="false" data-tab="harness">协同调度</button>
+            <button role="tab" aria-selected="false" data-tab="robot">具身反馈</button>
+          </div>
+          <section class="panel active" data-panel="vision" data-od-id="panel-vision"><h3>视觉 Agent：看懂当前屏幕</h3><p>多模态视觉 API 负责理解屏幕内容，识别目标按钮、菜单、文件、输入框等 UI 元素，并输出可用于光标引导的空间位置。</p><div class="tag-row"><span class="tag">Vision API</span><span class="tag">UI Grounding</span><span class="tag">Intent Mapping</span></div></section>
+          <section class="panel" data-panel="mac" data-od-id="panel-mac"><h3>桌面感知：把屏幕状态转成 Agent 上下文</h3><p>Mac 端服务负责截图、坐标映射和 overlay 引导，把用户当前所见的界面状态转化为任务 Agent 可以持续追踪的上下文。</p><div class="tag-row"><span class="tag">Screenshot</span><span class="tag">Overlay</span><span class="tag">Coordinate</span></div></section>
+          <section class="panel" data-panel="harness" data-od-id="panel-harness"><h3>协同调度：从目标到下一步操作</h3><p>意图 Agent 与 Harness 状态机协同管理需求分析、步骤拆解、ACK、异常恢复和 trace_id，让连续引导过程可追踪、可恢复。</p><div class="tag-row"><span class="tag">State Machine</span><span class="tag">EventBus</span><span class="tag">ACK</span></div></section>
+          <section class="panel" data-panel="robot" data-od-id="panel-robot"><h3>具身反馈：让提示进入日常操作流程</h3><p>机器人通过头部转向、眼睛朝向、语音提示、表情和眨眼反馈引导状态，把屏幕上的抽象坐标转化为用户能直观看懂的协同提示。</p><div class="tag-row"><span class="tag">ESP32</span><span class="tag">Voice Prompt</span><span class="tag">Embodied AI</span></div></section>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="roadmap" data-od-id="roadmap">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Status & Roadmap</p>
+            <h2>从工具助手，走向日常操作流程里的协同伙伴。</h2>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric reveal"><strong class="num">Office</strong><span>办公软件辅助：降低复杂功能入口的查找成本</span></div>
+          <div class="metric reveal"><strong class="num">Learn</strong><span>教育学习指导：把抽象教程变成屏幕上的实时引导</span></div>
+          <div class="metric reveal"><strong class="num">Care</strong><span>老年人与新手帮助：降低数字工具使用门槛</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pagefoot">
+    <div class="container topnav-inner">
+      <span>Winky-bot · Project Detail</span>
+      <a class="meta" href="index.html">返回个人首页</a>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.addEventListener("pointermove", (event) => {
+      document.documentElement.style.setProperty("--mx", `${event.clientX}px`);
+      document.documentElement.style.setProperty("--my", `${event.clientY}px`);
+    });
+    document.querySelectorAll("[data-jump]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = document.querySelector(button.dataset.jump);
+        if (!target) return;
+        const top = target.getBoundingClientRect().top + window.pageYOffset - 72;
+        window.scrollTo({ top, behavior: reducedMotion ? "auto" : "smooth" });
+      });
+    });
+    document.querySelectorAll("[role='tab']").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll("[role='tab']").forEach((item) => item.setAttribute("aria-selected", "false"));
+        document.querySelectorAll("[data-panel]").forEach((panel) => panel.classList.remove("active"));
+        tab.setAttribute("aria-selected", "true");
+        document.querySelector(`[data-panel="${tab.dataset.tab}"]`)?.classList.add("active");
+      });
+    });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add("in");
+      });
+    }, { threshold: 0.18 });
+    document.querySelectorAll(".reveal").forEach((node) => observer.observe(node));
+    })();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="site.js"></script>
+</body>
+</html>

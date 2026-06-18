@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>考研调剂 AI 系统 · 谢宇航</title>
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <div class="cursor-light" aria-hidden="true"></div>
+  <header class="topnav">
+    <div class="container topnav-inner">
+      <a class="logo" href="index.html">谢宇航</a>
+      <nav aria-label="项目导航">
+        <a href="#outcome">成果</a>
+        <a href="#workflow">流程</a>
+        <a href="#modules">模块</a>
+        <a href="#slots">材料</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section detail-hero" data-od-id="hero">
+      <div class="container detail-shell">
+        <div class="reveal">
+          <p class="eyebrow">LangGraph · Consulting System</p>
+          <h1>考研调剂 AI 增效系统：AI 采集，人类决策。</h1>
+          <p class="lead">为提升个人考研咨询服务效率而自研的 AI Agent 工作系统。AI 辅助采集、人工核实决策，结合 Markdown 记忆库与自己一套完善分工skill、mcp组合拳，把单次咨询响应从 30 分钟压缩到约 5 分钟。通过 LangGraph 构建半自动化工作流，实现调剂信息采集、智能分析、记忆存储、动态优化等模块协同。</p>
+          <div class="hero-cta">
+            <button class="btn btn-primary" data-jump="#workflow">查看工作流</button>
+            <a class="btn btn-secondary" href="index.html#projects">返回项目矩阵</a>
+          </div>
+        </div>
+        <div class="demo-screen reveal" data-tilt>
+          <div class="screen-grid"></div>
+          <div class="desktop-window">
+            <div class="window-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="meta">transfer-agent.local</span></div>
+            <div class="window-body">
+              <aside class="side">
+                <div class="side-item">考生画像</div>
+                <div class="side-item">院校追踪</div>
+                <div class="side-item">官方源核实</div>
+                <div class="side-item">咨询记忆库</div>
+              </aside>
+              <div class="target-area">
+                <div class="target-card">
+                  <p class="meta">case.query</p>
+                  <h3>输入分数、专业代码、本科背景，生成调剂策略草案。</h3>
+                  <p class="muted">择校agent 负责聚合和初筛；顾问agent负责官方源核验与最终建议，避免把不确定信息包装成结论。</p>
+                </div>
+                <div class="cursor-line" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="outcome" data-od-id="outcome">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Outcome</p>
+            <h2>服务过真实咨询季的AI Native系统。</h2>
+          </div>
+          <p></p>
+        </div>
+        <div class="metric-row">
+          <div class="metric reveal"><strong class="num" data-count="60000" data-suffix="+">0</strong><span>2025 年 3-4 月个人营收</span></div>
+          <div class="metric reveal"><strong class="num" data-count="500" data-suffix="+">0</strong><span>小红书咨询量级</span></div>
+          <div class="metric reveal"><strong class="num" data-count="5">0</strong><span>单次响应约 5 分钟</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="workflow" data-od-id="workflow">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Workflow</p>
+            <h2>把非标准咨询变成可追踪、可复盘的流程。</h2>
+          </div>
+        </div>
+        <div class="flow">
+          <article class="flow-step reveal"><span class="num">01</span><div><h3>收集考生画像</h3><p>分数、专业代码、本科层次、一志愿、项目经历、地域偏好等输入进入结构化表单。</p></div></article>
+          <article class="flow-step reveal"><span class="num">02</span><div><h3>AI 辅助采集</h3><p>联网搜索与院校官网信息聚合，快速建立可疑似匹配学校池。</p></div></article>
+          <article class="flow-step reveal"><span class="num">03</span><div><h3>人工官方源核实</h3><p>关键调剂信息回到研招网、院校官网或学院公告核验，避免模型幻觉影响决策。</p></div></article>
+          <article class="flow-step reveal"><span class="num">04</span><div><h3>记忆库沉淀</h3><p>一对一客户建立 Markdown 记忆库，后续多轮咨询可持续更新策略与限制条件。</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="modules" data-od-id="modules">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Modules</p>
+            <h2>将普通的商业服务变为AI Native。核心价值在于配合个人经验，在这个行业，我比大多数专业机构更擅长疑难杂症。</h2>
+          </div>
+        </div>
+        <div class="grid-3">
+          <article class="card detail-card reveal"><h3>信息采集模块</h3><p>追踪目标院校、专业代码、调剂动态和官方公告，输出待核验候选项。</p><div class="tag-row"><span class="tag">联网搜索</span><span class="tag">专业代码</span></div></article>
+          <article class="card detail-card reveal"><h3>分析与决策辅助</h3><p>结合分数段去向、院校层次、考生背景和项目经历，生成策略草案。</p><div class="tag-row"><span class="tag">分数段</span><span class="tag">院校层次</span></div></article>
+          <article class="card detail-card reveal"><h3>系统提示词模板库</h3><p>将高频咨询流程固定成提示词模板与检查清单，减少重复劳动。</p><div class="tag-row"><span class="tag">Prompt</span><span class="tag">Checklist</span></div></article>
+          <article class="card detail-card reveal"><h3>分层服务系统</h3><p>一对一全程服务使用专属记忆库，批量咨询使用标准化输出。</p><div class="tag-row"><span class="tag">CRM</span><span class="tag">分层服务</span></div></article>
+          <article class="card detail-card reveal"><h3>动态学习机制</h3><p>新规则可回写到总要求文档，工作流随服务经验持续进化。</p><div class="tag-row"><span class="tag">反馈循环</span><span class="tag">规则沉淀</span></div></article>
+          <article class="card detail-card reveal"><h3>隐私与本地化</h3><p>客户记录优先本地化管理，公开展示时应只放脱敏样例。</p><div class="tag-row"><span class="tag">Local-first</span><span class="tag">脱敏</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="slots" data-od-id="slots">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Project Materials</p>
+            <h2>商业变现质量与相关评价。</h2>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="screen-placeholder reveal">
+            <img src="988b16c9e37aad84ed0205bd6b4420dc.JPG" alt="系统界面截图" loading="lazy">
+          </div>
+          <div class="screen-placeholder reveal">
+            <img src="7cbb86058c40b25eacb7fb5114776892.JPG" alt="咨询流程脱敏样例" loading="lazy">
+          </div>
+          <div class="screen-placeholder reveal">
+            <img src="40cf3d0768e549fa007eac9f380bef4b.JPG" alt="来自学生调剂择校上岸·不完全截图" loading="lazy">
+            <span>来自学生调剂择校上岸·不完全截图</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pagefoot">
+    <div class="container topnav-inner">
+      <span>考研调剂 AI 系统 · Project Detail</span>
+      <a class="meta" href="index.html">返回个人首页</a>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="site.js"></script>
+</body>
+</html>
