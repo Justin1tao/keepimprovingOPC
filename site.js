@@ -716,6 +716,27 @@ const initWinkyCompanion = () => {
   }
 };
 
+const isMobile = () => window.matchMedia("(max-width: 920px)").matches;
+
+const initAmbientGlow = () => {
+  if (reducedMotion) return;
+  const glow = document.createElement("div");
+  glow.className = "ambient-glow";
+  glow.setAttribute("aria-hidden", "true");
+  document.body.prepend(glow);
+};
+
+const initPageTransition = () => {
+  const main = document.querySelector("main");
+  if (!main || reducedMotion) return;
+  main.classList.add("page-enter");
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      main.classList.add("page-enter-ready");
+    });
+  });
+};
+
 const initGsapMotion = () => {
   if (!hasGsap || reducedMotion) {
     initFallbackReveal();
@@ -725,13 +746,13 @@ const initGsapMotion = () => {
   gsap.defaults({ duration: 0.72, ease: "power3.out" });
   if (hasScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 
-  gsap.set(".reveal", { autoAlpha: 0, y: 26 });
+  gsap.set(".reveal", { autoAlpha: 0, y: 24 });
   gsap.set(".bar i", { scaleX: 0, transformOrigin: "left center" });
 
   gsap.timeline()
     .from(".topnav", { y: -22, autoAlpha: 0, duration: 0.45 })
-    .to(".hero .reveal", { autoAlpha: 1, y: 0, stagger: 0.12, duration: 0.82 }, "-=0.12")
-    .from(".hero .btn", { y: 12, autoAlpha: 0, stagger: 0.07, duration: 0.42 }, "-=0.35");
+    .to(".hero .reveal", { autoAlpha: 1, y: 0, stagger: 0.1, duration: 0.8, ease: "power3.out" }, "-=0.15")
+    .from(".hero-cta .btn", { y: 14, autoAlpha: 0, stagger: 0.08, duration: 0.5, ease: "power3.out" }, "-=0.45");
 
   if (hasScrollTrigger) {
     const nonHeroReveals = Array.from(document.querySelectorAll(".reveal"))
@@ -745,7 +766,9 @@ const initGsapMotion = () => {
       onEnter: (batch) => gsap.to(batch, {
         autoAlpha: 1,
         y: 0,
-        stagger: { each: 0.08, from: "start" },
+        duration: 0.7,
+        ease: "power3.out",
+        stagger: { each: 0.1, from: "start" },
         overwrite: true
       })
     });
@@ -806,35 +829,55 @@ const initGsapMotion = () => {
     });
 
     ScrollTrigger.batch(".project-card, .flow-step, .node, .metric, .log-row", {
-      start: "top 88%",
+      start: "top 86%",
       once: true,
       interval: 0.08,
-      batchMax: 5,
+      batchMax: 6,
       onEnter: (batch) => gsap.fromTo(batch,
-        { autoAlpha: 0, y: 34, scale: 0.985 },
-        { autoAlpha: 1, y: 0, scale: 1, stagger: 0.08, overwrite: true }
+        { autoAlpha: 0, y: 24 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.7,
+          ease: "power3.out",
+          stagger: { each: 0.1, from: "start" },
+          overwrite: true
+        }
       )
     });
   }
 
-  document.querySelectorAll("[data-tilt]").forEach((card) => {
-    const rotateX = gsap.quickTo(card, "rotationX", { duration: 0.35, ease: "power3.out" });
-    const rotateY = gsap.quickTo(card, "rotationY", { duration: 0.35, ease: "power3.out" });
-    const lift = gsap.quickTo(card, "y", { duration: 0.3, ease: "power3.out" });
+  const tiltCards = document.querySelectorAll("[data-tilt]");
+  const applyTilt = (card) => {
+    card.style.perspective = "1000px";
+    const rotateX = gsap.quickTo(card, "rotationX", { duration: 0.4, ease: "power3.out" });
+    const rotateY = gsap.quickTo(card, "rotationY", { duration: 0.4, ease: "power3.out" });
+    const lift = gsap.quickTo(card, "y", { duration: 0.35, ease: "power3.out" });
     card.addEventListener("pointermove", (event) => {
       const rect = card.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width - 0.5) * 9;
-      const y = ((event.clientY - rect.top) / rect.height - 0.5) * -9;
+      const x = ((event.clientX - rect.left) / rect.width - 0.5) * 8;
+      const y = ((event.clientY - rect.top) / rect.height - 0.5) * -8;
       rotateY(x);
       rotateX(y);
-      lift(-3);
+      lift(-2);
     }, { passive: true });
     card.addEventListener("pointerleave", () => {
       rotateY(0);
       rotateX(0);
       lift(0);
     });
-  });
+  };
+
+  if (!isMobile()) {
+    tiltCards.forEach(applyTilt);
+  }
+
+  const heroOrbital = document.querySelector(".hero .orbital[data-tilt]");
+  if (heroOrbital) {
+    const heroScaleTo = gsap.quickTo(heroOrbital, "scale", { duration: 0.4, ease: "power3.out" });
+    heroOrbital.addEventListener("pointerenter", () => { if (!isMobile()) heroScaleTo(1.015); }, { passive: true });
+    heroOrbital.addEventListener("pointerleave", () => { heroScaleTo(1); }, { passive: true });
+  }
 
   document.querySelectorAll(".btn").forEach((button) => {
     button.addEventListener("pointerenter", () => {
@@ -847,6 +890,8 @@ const initGsapMotion = () => {
 };
 
 makeDataField();
+initAmbientGlow();
+initPageTransition();
 initPointer();
 initJumps();
 initCopyButtons();

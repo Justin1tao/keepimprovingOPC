@@ -938,14 +938,36 @@ h3 { font-size: var(--text-xl); font-weight: 740; }
   will-change: transform, opacity;
 }
 .btn, .tag, .pill-cloud span, .flow-step, .node, .log-row { will-change: transform; }
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity 560ms var(--ease-standard), transform 560ms var(--ease-standard); will-change: transform, opacity; }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 620ms cubic-bezier(0.2, 0, 0, 1), transform 620ms cubic-bezier(0.2, 0, 0, 1); will-change: transform, opacity; }
 .reveal.in { opacity: 1; transform: translateY(0); }
+
+.ambient-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  background:
+    radial-gradient(ellipse 600px 500px at 18% 22%, color-mix(in oklab, var(--accent), transparent 40%), transparent 70%),
+    radial-gradient(ellipse 500px 600px at 82% 78%, color-mix(in oklab, #6366f1, transparent 55%), transparent 70%);
+  will-change: background-position;
+  animation: ambientDrift 30s ease-in-out infinite alternate;
+}
+@keyframes ambientDrift {
+  0% { background-position: 0% 0%, 100% 100%; }
+  50% { background-position: 5% 3%, 95% 97%; }
+  100% { background-position: 0% 0%, 100% 100%; }
+}
+
+.page-enter { opacity: 0; transform: scale(0.995); }
+.page-enter-ready { opacity: 1; transform: scale(1); transition: opacity 500ms cubic-bezier(0.2, 0, 0, 1), transform 500ms cubic-bezier(0.2, 0, 0, 1); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
-  .data-field, .digital-rain, .cursor-light { display: none; }
+  .data-field, .digital-rain, .cursor-light, .ambient-glow { display: none; }
   .reveal { opacity: 1; transform: none; }
+  .page-enter, .page-enter-ready { opacity: 1; transform: none; transition: none; }
 }
 
 @media (max-width: 920px) {
