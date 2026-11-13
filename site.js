@@ -619,7 +619,7 @@ const initWinkyCompanion = () => {
   const pupils = bot.querySelectorAll(".winky-eye i");
   const arms = bot.querySelectorAll(".winky-arm");
   const clap = bot.querySelector(".pixel-clap");
-  const stage = bot.closest(".target-area");
+  const stage = document.querySelector(".target-area");
   const smartCursor = stage?.querySelector(".smart-cursor");
   const guideFlow = stage?.querySelector(".guide-flow");
   const hotspot = stage?.querySelector(".guide-hotspot");
