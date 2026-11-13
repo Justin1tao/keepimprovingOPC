@@ -174,6 +174,8 @@ const makeDomDataField = () => {
     stream.style.setProperty("--x", `${5 + Math.random() * 90}%`);
     stream.style.setProperty("--o", `${0.08 + Math.random() * 0.18}`);
     stream.style.setProperty("--b", `${Math.random() > 0.72 ? 0.7 : 0}px`);
+    stream.style.setProperty("--z", `${Math.round(-120 + Math.random() * 240)}px`);
+    stream.style.setProperty("--s", `${0.78 + Math.random() * 0.48}`);
 
     for (let j = 0; j < 7; j += 1) {
       const cell = document.createElement("span");
