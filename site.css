@@ -414,6 +414,7 @@ h3 { font-size: var(--text-xl); font-weight: 740; }
   height: 34px;
   border-radius: var(--radius-pill);
   color: var(--accent);
+  text-shadow: 0 0 12px currentColor;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   background: color-mix(in oklab, var(--surface), transparent 8%);
@@ -900,10 +901,11 @@ h3 { font-size: var(--text-xl); font-weight: 740; }
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  opacity: 0.72;
-  mix-blend-mode: multiply;
+  opacity: 0.82;
+  mix-blend-mode: screen;
+  filter: saturate(1.35) contrast(1.08);
 }
-.data-field { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; opacity: 0.9; }
+.data-field { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; opacity: 0.9; perspective: 900px; transform-style: preserve-3d; }
 .data-stream {
   position: absolute;
   left: var(--x);
@@ -1142,3 +1144,15 @@ body::after { opacity: 0.22; }
 .cursor-light { background: radial-gradient(circle, rgba(99, 230, 255, 0.18), transparent 65%); mix-blend-mode: screen; }
 .pagefoot { border-top-color: rgba(99, 230, 255, 0.16); }
 @media (max-width: 920px) { .topnav nav { background: rgba(7, 16, 31, 0.96); } }
+
+.data-field::before, .data-field::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(99,230,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,.07) 1px, transparent 1px);
+  background-size: 72px 72px; mask-image: radial-gradient(circle at center, black, transparent 78%);
+  animation: codeGridDrift 18s linear infinite;
+}
+.data-field::after { background-size: 144px 144px; opacity: .42; animation-duration: 28s; animation-direction: reverse; }
+@keyframes codeGridDrift { from { transform: translate3d(0,0,0) rotateX(58deg) scale(1.35); } to { transform: translate3d(-72px, 72px, 0) rotateX(58deg) scale(1.35); } }
+.data-stream:nth-child(3n) { color: #8b5cf6; }
+.data-stream:nth-child(4n) { color: #f472b6; }
+.data-stream:nth-child(5n) { color: #7df5b4; }

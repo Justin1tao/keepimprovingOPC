@@ -55,7 +55,13 @@ const makeDataField = () => {
   document.body.prepend(canvas);
 
   const ctx = canvas.getContext("2d");
-  const alphabet = ["00", "01", "AI", "CV", "RAG", "GPU", "API", "379", "125", "126", "500+", "6W+", "TRACE", "STATE", "AGENT"];
+  const alphabet = ["00", "01", "10", "11", "AI", "CV", "RAG", "GPU", "API", "379", "125", "126", "500+", "6W+", "TRACE", "STATE", "AGENT", "0x7F", "::", "//", "=>"];
+  const palette = [
+    [99, 230, 255],
+    [139, 92, 246],
+    [244, 114, 182],
+    [125, 245, 180]
+  ];
   const streams = [];
   const state = { scrollBoost: 0, mouseBoost: 0 };
   const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim();
@@ -75,7 +81,7 @@ const makeDataField = () => {
     canvas.style.height = `${window.innerHeight}px`;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     streams.length = 0;
-    const count = window.innerWidth < 720 ? 52 : 112;
+    const count = window.innerWidth < 720 ? 86 : 184;
     for (let i = 0; i < count; i += 1) {
       streams.push({
         x: Math.random() * window.innerWidth,
@@ -85,7 +91,9 @@ const makeDataField = () => {
         size: 10 + Math.random() * 18,
         alpha: 0.08 + Math.random() * 0.22,
         token: alphabet[Math.floor(Math.random() * alphabet.length)],
-        phase: Math.random() * Math.PI * 2
+        phase: Math.random() * Math.PI * 2,
+        depth: 0.35 + Math.random() * 0.9,
+        color: palette[Math.floor(Math.random() * palette.length)]
       });
     }
   };
@@ -93,6 +101,7 @@ const makeDataField = () => {
   const draw = (time = 0) => {
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     ctx.font = "12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
+    ctx.shadowBlur = 0;
     ctx.textBaseline = "middle";
 
     const px = (pointer.x - window.innerWidth / 2) / window.innerWidth;
@@ -101,8 +110,8 @@ const makeDataField = () => {
 
     streams.forEach((stream, index) => {
       const wave = Math.sin(time * 0.001 + stream.phase) * 10;
-      stream.y += stream.speed + state.scrollBoost * 0.06;
-      stream.x += stream.drift + px * 0.42;
+      stream.y += (stream.speed + state.scrollBoost * 0.06) * stream.depth;
+      stream.x += (stream.drift + px * 0.42) * stream.depth;
 
       if (stream.y > window.innerHeight + 40) {
         stream.y = -30 - Math.random() * 120;
@@ -112,17 +121,22 @@ const makeDataField = () => {
       if (stream.x < -80) stream.x = window.innerWidth + 40;
       if (stream.x > window.innerWidth + 80) stream.x = -40;
 
-      const alpha = Math.max(0.035, stream.alpha + state.mouseBoost * 0.08);
-      ctx.fillStyle = rgba(alpha);
-      ctx.font = `${stream.size}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`;
-      ctx.fillText(stream.token, stream.x + wave + px * 22, stream.y + py * 12);
+      const alpha = Math.max(0.055, stream.alpha + state.mouseBoost * 0.12) * stream.depth;
+      const [r, g, b] = stream.color;
+      const color = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+      ctx.fillStyle = color;
+      ctx.shadowColor = `rgba(${r}, ${g}, ${b}, ${Math.min(0.5, alpha + 0.12)})`;
+      ctx.shadowBlur = stream.depth > 0.86 ? 10 : 4;
+      ctx.font = `${Math.max(10, stream.size * stream.depth)}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`;
+      ctx.fillText(stream.token, stream.x + wave * stream.depth + px * 22 * stream.depth, stream.y + py * 12 * stream.depth);
+      ctx.shadowBlur = 0;
 
       if (index % 7 === 0) {
         ctx.globalAlpha = alpha * 0.5;
         ctx.beginPath();
         ctx.moveTo(stream.x - 18, stream.y + 14);
         ctx.lineTo(stream.x + 52, stream.y + 14);
-        ctx.strokeStyle = rgba(0.18);
+        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${Math.min(0.22, alpha)})`;
         ctx.stroke();
         ctx.globalAlpha = 1;
       }
@@ -890,6 +904,7 @@ const initGsapMotion = () => {
 };
 
 makeDataField();
+makeDomDataField();
 initAmbientGlow();
 initPageTransition();
 initPointer();
