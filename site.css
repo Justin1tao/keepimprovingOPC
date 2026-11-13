@@ -1,22 +1,22 @@
 :root {
-  --bg: #07101f;
-  --surface: #0d182a;
+  --bg: #ffffff;
+  --surface: #ffffff;
   --surface-warm: var(--surface);
-  --fg: #f4f8ff;
-  --fg-2: #cbd7ea;
-  --muted: rgba(190, 209, 234, 0.72);
+  --fg: #181d26;
+  --fg-2: #333333;
+  --muted: rgba(4, 14, 32, 0.69);
   --meta: var(--muted);
-  --border: #203450;
-  --border-soft: #15263e;
-  --accent: #63e6ff;
-  --accent-on: #06101a;
-  --accent-hover: #22c6e8;
+  --border: #e0e2e6;
+  --border-soft: #eef0f3;
+  --accent: #1b61c9;
+  --accent-on: #ffffff;
+  --accent-hover: #254fad;
   --accent-active: color-mix(in oklab, var(--accent), black 14%);
-  --success: #7df5b4;
-  --warn: #ffd166;
-  --danger: #ff7c9c;
-  --font-display: "Avenir Next", "PingFang SC", "Helvetica Neue", sans-serif;
-  --font-body: "Avenir Next", "PingFang SC", "Helvetica Neue", sans-serif;
+  --success: #006400;
+  --warn: #eab308;
+  --danger: #dc2626;
+  --font-display: "Haas Groot Disp", Haas, -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-body: Haas, -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
   --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
   --text-xs: 12px;
   --text-sm: 14px;
@@ -47,10 +47,10 @@
   --elev-flat: none;
   --elev-ring: 0 0 0 1px var(--border);
   --elev-raised:
-    0 0 0 1px rgba(99, 230, 255, 0.08),
-    0 22px 60px rgba(0, 0, 0, 0.36),
-    0 0 26px rgba(99, 230, 255, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    0 0 1px rgba(0, 0, 0, 0.32),
+    0 0 2px rgba(0, 0, 0, 0.08),
+    0 1px 3px rgba(45, 127, 249, 0.28),
+    inset 0 0 0 0.5px rgba(0, 0, 0, 0.06);
   --focus-ring: 0 0 0 3px color-mix(in oklab, var(--accent), transparent 70%);
   --motion-fast: 150ms;
   --motion-base: 200ms;
@@ -414,7 +414,6 @@ h3 { font-size: var(--text-xl); font-weight: 740; }
   height: 34px;
   border-radius: var(--radius-pill);
   color: var(--accent);
-  text-shadow: 0 0 12px currentColor;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   background: color-mix(in oklab, var(--surface), transparent 8%);
@@ -901,11 +900,11 @@ h3 { font-size: var(--text-xl); font-weight: 740; }
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  opacity: 0.82;
+  opacity: 0.68;
   mix-blend-mode: screen;
-  filter: saturate(1.35) contrast(1.08);
+  filter: saturate(1.15);
 }
-.data-field { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; opacity: 0.9; perspective: 900px; transform-style: preserve-3d; }
+.data-field { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; opacity: 0.72; perspective: 900px; transform-style: preserve-3d; }
 .data-stream {
   position: absolute;
   left: var(--x);
@@ -917,7 +916,7 @@ h3 { font-size: var(--text-xl); font-weight: 740; }
   font-size: 11px;
   line-height: 1;
   opacity: var(--o);
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, var(--z, 0px)) scale(var(--s, 1));
   will-change: transform, opacity;
   filter: blur(var(--b));
 }
@@ -1099,60 +1098,22 @@ h3 { font-size: var(--text-xl); font-weight: 740; }
   .cert-next { right: var(--space-2); }
 }
 
-/* Visual system: a dark observatory with restrained cyan and violet light. */
-body::before {
-  background:
-    radial-gradient(circle at 14% 8%, rgba(99, 230, 255, 0.14), transparent 25%),
-    radial-gradient(circle at 86% 20%, rgba(139, 92, 246, 0.14), transparent 26%),
-    linear-gradient(120deg, transparent 0 45%, rgba(99, 230, 255, 0.055) 45.2% 45.5%, transparent 45.7% 100%);
-  opacity: 1;
-}
-body::after { opacity: 0.22; }
-.topnav { background: rgba(7, 16, 31, 0.72); border-bottom-color: rgba(99, 230, 255, 0.16); }
-.logo { text-shadow: 0 0 22px rgba(99, 230, 255, 0.46); }
-.hero { isolation: isolate; }
-.hero::before {
-  content: ""; position: absolute; inset: 8% -12% auto auto; width: min(720px, 70vw); height: 720px;
-  background: conic-gradient(from 190deg, transparent, rgba(99, 230, 255, 0.11), transparent 28%, rgba(139, 92, 246, 0.12), transparent 54%);
-  filter: blur(26px); opacity: 0.8; pointer-events: none; transform: rotate(-12deg);
-}
-.orbital, .demo-screen {
-  border-color: rgba(99, 230, 255, 0.24);
-  background:
-    radial-gradient(circle at 20% 12%, rgba(99, 230, 255, 0.18), transparent 28%),
-    radial-gradient(circle at 86% 76%, rgba(139, 92, 246, 0.14), transparent 30%),
-    linear-gradient(145deg, rgba(17, 37, 62, 0.94), rgba(8, 17, 32, 0.98));
-  box-shadow: 0 34px 100px rgba(0, 0, 0, 0.42), 0 0 44px rgba(99, 230, 255, 0.08);
-}
-.orbital::before, .orbital::after {
-  content: ""; position: absolute; border: 1px solid rgba(99, 230, 255, 0.18); border-radius: 50%;
-  pointer-events: none; transform: rotateX(68deg) rotateZ(-18deg);
-}
-.orbital::before { inset: 12% 8%; box-shadow: 0 0 0 12px rgba(99, 230, 255, 0.025), 0 0 34px rgba(99, 230, 255, 0.15); animation: orbitPulse 8s ease-in-out infinite; }
-.orbital::after { inset: 27% 20%; border-color: rgba(139, 92, 246, 0.28); transform: rotateX(68deg) rotateZ(34deg); animation: orbitPulse 11s ease-in-out infinite reverse; }
-@keyframes orbitPulse { 0%, 100% { transform: rotateX(68deg) rotateZ(-18deg) scale(0.96); opacity: 0.55; } 50% { transform: rotateX(68deg) rotateZ(8deg) scale(1.04); opacity: 1; } }
-.signal-card { border-color: rgba(99, 230, 255, 0.2); background: rgba(8, 17, 32, 0.64); backdrop-filter: blur(16px); }
-.big-num, .stat-num, .function-metrics strong { text-shadow: 0 0 28px rgba(99, 230, 255, 0.18); }
-.card, .function-shell, .certificate-showcase, .contact-strip { background: linear-gradient(145deg, rgba(16, 31, 53, 0.9), rgba(9, 18, 34, 0.94)); border-color: rgba(99, 230, 255, 0.16); box-shadow: var(--elev-raised); }
-.card:hover, .project-card:hover { border-color: rgba(99, 230, 255, 0.5); box-shadow: 0 24px 70px rgba(0, 0, 0, 0.44), 0 0 30px rgba(99, 230, 255, 0.1); }
-.function-stage, .certificate-stage { background-color: rgba(7, 16, 31, 0.72); border-color: rgba(99, 230, 255, 0.18); }
-.system-map, .node, .function-tab, .function-metrics span, .tag, .pill-cloud span { background: rgba(10, 22, 41, 0.72); border-color: rgba(99, 230, 255, 0.16); }
-.function-tab.active { background: linear-gradient(135deg, rgba(99, 230, 255, 0.14), rgba(10, 22, 41, 0.74)); }
-.btn-primary { box-shadow: 0 0 24px rgba(99, 230, 255, 0.18), var(--elev-raised); }
-.btn-secondary { background: rgba(11, 24, 44, 0.8); border-color: rgba(99, 230, 255, 0.22); }
-.btn-ghost { color: rgba(203, 215, 234, 0.78); }
-.cursor-light { background: radial-gradient(circle, rgba(99, 230, 255, 0.18), transparent 65%); mix-blend-mode: screen; }
-.pagefoot { border-top-color: rgba(99, 230, 255, 0.16); }
-@media (max-width: 920px) { .topnav nav { background: rgba(7, 16, 31, 0.96); } }
-
+/* 保留原有蓝色视觉，只增强代码流的层次和空间感。 */
 .data-field::before, .data-field::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background-image: linear-gradient(rgba(99,230,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,.07) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(27,97,201,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(27,97,201,.045) 1px, transparent 1px);
   background-size: 72px 72px; mask-image: radial-gradient(circle at center, black, transparent 78%);
   animation: codeGridDrift 18s linear infinite;
 }
-.data-field::after { background-size: 144px 144px; opacity: .42; animation-duration: 28s; animation-direction: reverse; }
+.data-field::after { background-size: 144px 144px; opacity: .36; animation-duration: 28s; animation-direction: reverse; }
 @keyframes codeGridDrift { from { transform: translate3d(0,0,0) rotateX(58deg) scale(1.35); } to { transform: translate3d(-72px, 72px, 0) rotateX(58deg) scale(1.35); } }
-.data-stream:nth-child(3n) { color: #8b5cf6; }
-.data-stream:nth-child(4n) { color: #f472b6; }
-.data-stream:nth-child(5n) { color: #7df5b4; }
+.digital-rain { text-shadow: 0 0 10px rgba(27,97,201,.28); }
+
+.orbital::before, .orbital::after {
+  content: ""; position: absolute; border: 1px solid color-mix(in oklab, var(--accent), transparent 70%);
+  border-radius: 50%; pointer-events: none; transform-style: preserve-3d;
+  box-shadow: 0 0 22px color-mix(in oklab, var(--accent), transparent 82%);
+}
+.orbital::before { inset: 13% 8%; transform: rotateX(68deg) rotateZ(-16deg); animation: blueOrbit 10s ease-in-out infinite; }
+.orbital::after { inset: 28% 21%; border-color: color-mix(in oklab, var(--accent), transparent 78%); transform: rotateX(68deg) rotateZ(30deg); animation: blueOrbit 13s ease-in-out infinite reverse; }
+@keyframes blueOrbit { 0%, 100% { transform: rotateX(68deg) rotateZ(-16deg) scale(.96); opacity: .42; } 50% { transform: rotateX(68deg) rotateZ(12deg) scale(1.04); opacity: .9; } }
