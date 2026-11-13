@@ -732,6 +732,36 @@ const initWinkyCompanion = () => {
   }
 };
 
+const initWinkyDetails = () => {
+  const demo = document.querySelector(".demo-screen");
+  const status = document.querySelector(".execution-status");
+  if (!demo || !status || reducedMotion) return;
+
+  const steps = Array.from(status.querySelectorAll(".execution-step"));
+  if (hasGsap && steps.length) {
+    const cycle = gsap.timeline({ repeat: -1, repeatDelay: 0.6, defaults: { ease: "power2.out" } });
+    steps.forEach((step, index) => {
+      cycle.call(() => {
+        steps.forEach((item, itemIndex) => {
+          item.classList.toggle("is-active", itemIndex === index);
+          item.classList.toggle("is-done", itemIndex < index);
+        });
+      }).to(step, { x: 4, duration: 0.14 }).to(step, { x: 0, duration: 0.24 });
+    });
+  }
+
+  if (hasGsap && !isMobile()) {
+    const rotateX = gsap.quickTo(demo, "rotationX", { duration: 0.45, ease: "power3.out" });
+    const rotateY = gsap.quickTo(demo, "rotationY", { duration: 0.45, ease: "power3.out" });
+    demo.addEventListener("pointermove", (event) => {
+      const rect = demo.getBoundingClientRect();
+      rotateY(((event.clientX - rect.left) / rect.width - 0.5) * 3.8);
+      rotateX(((event.clientY - rect.top) / rect.height - 0.5) * -3.8);
+    }, { passive: true });
+    demo.addEventListener("pointerleave", () => { rotateX(0); rotateY(0); });
+  }
+};
+
 const isMobile = () => window.matchMedia("(max-width: 920px)").matches;
 
 const initAmbientGlow = () => {
@@ -919,4 +949,5 @@ initResumeDrawer();
 initCertificateCarousel();
 initProjectGlow();
 initWinkyCompanion();
+initWinkyDetails();
 initGsapMotion();
