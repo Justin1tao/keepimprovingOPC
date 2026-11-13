@@ -177,6 +177,31 @@
       .flow-step { grid-template-columns: 1fr; }
       .panel { padding: var(--space-5); }
     }
+    /* Winky control room: show the full software / hardware execution loop. */
+    .demo-screen { perspective: 1400px; transform-style: preserve-3d; background: radial-gradient(circle at 18% 12%, rgba(27,97,201,.12), transparent 30%), radial-gradient(circle at 88% 82%, rgba(99,230,255,.12), transparent 28%), var(--surface); }
+    .demo-screen::before { content: ""; position: absolute; inset: 10px; border: 1px solid color-mix(in oklab, var(--accent), transparent 82%); border-radius: calc(var(--radius-lg) - 6px); pointer-events: none; transform: translateZ(18px); }
+    .desktop-window { transform: rotateX(1.8deg) rotateY(-1.6deg) translateZ(18px); transform-style: preserve-3d; box-shadow: 0 28px 60px rgba(20,60,120,.18), 0 0 34px rgba(27,97,201,.08); }
+    .window-bar { background: linear-gradient(90deg, color-mix(in oklab, var(--accent), transparent 94%), transparent); }
+    .target-area { overflow: hidden; }
+    .target-area::before { content: "DESKTOP CONTROL // HARDWARE LINK // TRACE 04"; position: absolute; right: 18px; top: 16px; color: color-mix(in oklab, var(--accent), transparent 58%); font: 10px var(--font-mono); letter-spacing: .08em; }
+    .target-card { background: color-mix(in oklab, var(--surface), transparent 4%); transform: translateZ(30px); box-shadow: 0 18px 36px rgba(20,60,120,.16), var(--elev-raised); }
+    .execution-status { position: absolute; left: 22px; bottom: 22px; z-index: 5; width: min(250px, 58%); padding: 12px; border: 1px solid color-mix(in oklab, var(--accent), transparent 66%); border-radius: var(--radius-md); background: color-mix(in oklab, var(--surface), transparent 8%); box-shadow: 0 14px 30px rgba(20,60,120,.14); backdrop-filter: blur(12px); transform: translateZ(38px); }
+    .execution-head { display:flex; justify-content:space-between; gap:8px; align-items:center; margin-bottom:9px; font: 10px var(--font-mono); letter-spacing:.08em; color:var(--muted); }
+    .execution-live { color: #198754; }
+    .execution-step { display:grid; grid-template-columns:26px 1fr 8px; gap:8px; align-items:center; min-height:27px; color:var(--muted); font-size:11px; border-top:1px solid var(--border-soft); }
+    .execution-step span:first-child { color:var(--accent); font:11px var(--font-mono); }
+    .execution-step i { width:6px; height:6px; border-radius:50%; background:var(--border); }
+    .execution-step.is-active { color:var(--fg); }
+    .execution-step.is-active i { background:#22a06b; box-shadow:0 0 0 5px rgba(34,160,107,.12), 0 0 12px rgba(34,160,107,.38); }
+    .execution-step.is-done i { background:var(--accent); }
+    .hardware-link { position:absolute; right:18px; bottom:18px; z-index:4; display:flex; align-items:center; gap:7px; padding:6px 9px; border:1px solid color-mix(in oklab, var(--accent), transparent 64%); border-radius:var(--radius-pill); background:color-mix(in oklab, var(--surface), transparent 8%); color:var(--accent); font:10px var(--font-mono); }
+    .hardware-link i { width:7px; height:7px; border-radius:50%; background:#22a06b; box-shadow:0 0 12px rgba(34,160,107,.5); }
+    .flow-step { transform-style:preserve-3d; }
+    .flow-step .num { text-shadow:0 0 14px color-mix(in oklab, var(--accent), transparent 70%); }
+    .tabs { box-shadow: 0 20px 50px rgba(20,60,120,.08); }
+    .panel.active { animation: panelLift .4s var(--ease-standard) both; }
+    @keyframes panelLift { from { opacity:0; transform:translateY(10px) scale(.99); } to { opacity:1; transform:translateY(0) scale(1); } }
+    @media (max-width: 520px) { .execution-status { width: 72%; left: 12px; bottom: 12px; } .hardware-link { right:12px; bottom:12px; } }
   </style>
 </head>
 <body>
@@ -198,8 +223,8 @@
       <div class="container hero-grid">
         <div class="reveal">
           <p class="eyebrow">Winky · Multi-Agent Cursor Companion</p>
-          <h1>面向未来人机协同的智能光标跟随桌面机器人。</h1>
-          <p class="lead">Winky 是一款面向无障碍语音交互的多 Agent 智能光标跟随桌面机器人。它关注的不是“替用户点完所有按钮”，而是让 AI 理解用户目标、看懂当前屏幕，并通过光标高亮、语音、表情与眨眼等具身反馈，引导残障人士、视障人群与老年用户完成复杂软件里的下一步操作。项目入围天猫 AI 黑客松科技 UI 赛道前三强，并进入机器人仿人技术大赛决赛。</p>
+          <h1>从目标到执行：软硬件协同的多步骤桌面控制机器人。</h1>
+          <p class="lead">Winky 是一套面向无障碍语音交互的软硬件协同系统：AI 先理解目标，再读取桌面状态、规划多步骤操作、控制电脑完成执行，并让实体机器人同步转向、播报和反馈。它把桌面控制从“找到一个按钮”推进到可追踪、可恢复的连续任务流程。项目入围天猫 AI 黑客松科技 UI 赛道前三强，并进入机器人仿人技术大赛决赛。</p>
           <div class="tag-row"><span class="tag">天猫 AI 黑客松科技 UI 赛道 Top 3</span><span class="tag">机器人仿人技术大赛决赛</span></div>
           <div class="hero-cta">
             <button class="btn btn-primary" data-jump="#flow">查看项目流程</button>
@@ -247,9 +272,17 @@
                 </div>
                 <div class="target-card">
                   <p class="meta">assistant.intent</p>
-            <h3>“帮我找到文件重命名的位置”</h3>
-            <p class="muted">任务 Agent 分析意图，视觉 Agent 定位目标 UI，光标高亮下一步位置，桌面机器人同步看向目标区域并给出语音提示。</p>
+            <h3>“完成这组桌面操作”</h3>
+            <p class="muted">任务 Agent 拆解目标，视觉 Agent 持续读取屏幕，桌面控制层执行多步点击、输入与切换；Winky 同步转向目标区域、播报当前状态并在异常时请求确认。</p>
                 </div>
+                <div class="execution-status" aria-label="实时任务执行状态">
+                  <div class="execution-head"><span>LIVE TASK TRACE</span><span class="execution-live">● RUNNING</span></div>
+                  <div class="execution-step is-done"><span>01</span><span>读取桌面状态</span><i></i></div>
+                  <div class="execution-step is-active"><span>02</span><span>规划多步骤操作</span><i></i></div>
+                  <div class="execution-step"><span>03</span><span>执行电脑控制</span><i></i></div>
+                  <div class="execution-step"><span>04</span><span>同步机器人反馈</span><i></i></div>
+                </div>
+                <div class="hardware-link"><i></i><span>ESP32 LINKED · ACK 04</span></div>
                 <div class="cursor-line" aria-hidden="true"></div>
               </div>
             </div>
@@ -263,12 +296,12 @@
         <div class="section-head reveal">
           <div>
             <p class="eyebrow">Problem Framing</p>
-            <h2>软件越来越复杂，真正的门槛是找不到正确入口。</h2>
+            <h2>复杂任务的难点，不是找到一个入口，而是连续完成一整组操作。</h2>
           </div>
-          <p>数字时代的很多用户并不是不会使用电脑，而是看不懂路径、找不到入口、无法判断下一步该点哪里。Winky 把这种操作断点转化为可视化、可听见、可追踪的协同引导。</p>
+          <p>用户面对复杂软件时，往往需要在多个窗口、菜单和输入状态之间连续切换。Winky 把任务拆解、桌面感知、电脑控制、硬件反馈和异常恢复串成一条可追踪的执行链。</p>
         </div>
         <div class="grid-3">
-          <article class="card reveal"><h3>任务理解</h3><p class="muted">用户只需要说出目标，例如“帮我找到文件重命名的位置”，系统先把自然语言目标拆解成可执行的操作意图。</p></article>
+          <article class="card reveal"><h3>任务理解</h3><p class="muted">用户只需要说出目标，例如“整理这批文件并完成归档”，系统先把自然语言目标拆解成可执行、可校验的多步骤操作计划。</p></article>
           <article class="card reveal"><h3>视觉定位</h3><p class="muted">视觉 Agent 理解当前屏幕，识别按钮、菜单、输入框等 UI 元素，把抽象意图映射到具体目标区域。</p></article>
           <article class="card reveal"><h3>具身引导</h3><p class="muted">光标高亮、机器人语音、表情、眨眼和视线方向共同给出反馈，让用户知道下一步在哪里、为什么这么做。</p></article>
         </div>
@@ -285,9 +318,9 @@
         </div>
         <div class="flow">
           <article class="flow-step reveal"><span class="num">01</span><div><h3>用户提出目标</h3><p>用户不需要描述界面结构，只需要说出想完成的任务，例如找入口、改设置、完成某个办公软件操作。</p></div></article>
-          <article class="flow-step reveal"><span class="num">02</span><div><h3>意图 Agent 分析需求</h3><p>系统判断用户真正要完成的操作，并把目标整理成可追踪的引导链路，而不是直接给一段笼统教程。</p></div></article>
+          <article class="flow-step reveal"><span class="num">02</span><div><h3>意图 Agent 分析需求</h3><p>系统判断用户真正要完成的结果，生成步骤、前置条件、确认点和异常分支，而不是只给一段笼统教程。</p></div></article>
           <article class="flow-step reveal"><span class="num">03</span><div><h3>视觉 Agent 定位目标</h3><p>多模态视觉模型理解当前屏幕，识别目标 UI 元素的位置，将操作意图落到具体坐标和界面区域。</p></div></article>
-          <article class="flow-step reveal"><span class="num">04</span><div><h3>光标与机器人共同引导</h3><p>辅助光标高亮目标，桌面机器人通过语音、表情、眨眼和视线方向给出具身反馈，引导用户完成下一步。</p></div></article>
+          <article class="flow-step reveal"><span class="num">04</span><div><h3>光标与机器人共同引导</h3><p>桌面控制层执行点击、输入、窗口切换等动作；机器人通过语音、表情、眨眼和视线方向同步反馈进度，用户可以随时打断、确认或恢复任务。</p></div></article>
         </div>
       </div>
     </section>
@@ -307,10 +340,12 @@
             <button role="tab" aria-selected="false" data-tab="mac">桌面感知</button>
             <button role="tab" aria-selected="false" data-tab="harness">协同调度</button>
             <button role="tab" aria-selected="false" data-tab="robot">具身反馈</button>
+            <button role="tab" aria-selected="false" data-tab="control">软硬件控制</button>
           </div>
           <section class="panel active" data-panel="vision" data-od-id="panel-vision"><h3>视觉 Agent：看懂当前屏幕</h3><p>多模态视觉 API 负责理解屏幕内容，识别目标按钮、菜单、文件、输入框等 UI 元素，并输出可用于光标引导的空间位置。</p><div class="tag-row"><span class="tag">Vision API</span><span class="tag">UI Grounding</span><span class="tag">Intent Mapping</span></div></section>
           <section class="panel" data-panel="mac" data-od-id="panel-mac"><h3>桌面感知：把屏幕状态转成 Agent 上下文</h3><p>Mac 端服务负责截图、坐标映射和 overlay 引导，把用户当前所见的界面状态转化为任务 Agent 可以持续追踪的上下文。</p><div class="tag-row"><span class="tag">Screenshot</span><span class="tag">Overlay</span><span class="tag">Coordinate</span></div></section>
           <section class="panel" data-panel="harness" data-od-id="panel-harness"><h3>协同调度：从目标到下一步操作</h3><p>意图 Agent 与 Harness 状态机协同管理需求分析、步骤拆解、ACK、异常恢复和 trace_id，让连续引导过程可追踪、可恢复。</p><div class="tag-row"><span class="tag">State Machine</span><span class="tag">EventBus</span><span class="tag">ACK</span></div></section>
+          <section class="panel" data-panel="control" data-od-id="panel-control"><h3>软硬件控制：让任务真正执行</h3><p>桌面控制服务把 Agent 规划转成可执行的鼠标、键盘、窗口与应用操作，并通过 ACK、状态机和异常恢复追踪每一步；ESP32 端同步接收状态，驱动机器人转向、灯效、语音和表情反馈。</p><div class="tag-row"><span class="tag">Computer Control</span><span class="tag">ACK / Recovery</span><span class="tag">ESP32</span><span class="tag">Multi-step Task</span></div></section>
           <section class="panel" data-panel="robot" data-od-id="panel-robot"><h3>具身反馈：让提示进入日常操作流程</h3><p>机器人组装完成后，通过头部转向、眼睛朝向、语音提示、表情和眨眼反馈引导状态，把屏幕上的抽象坐标转化为用户能直观看懂的协同提示。</p><div class="tag-row"><span class="tag">ESP32</span><span class="tag">Voice Prompt</span><span class="tag">Embodied AI</span></div></section>
         </div>
       </div>
